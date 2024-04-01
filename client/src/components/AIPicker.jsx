@@ -17,7 +17,7 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
 					<CustomButton
 						type='outline'
 						title='Asking AI...'
-						customStyles='text-xs w-full px-4 py-2.5 rounded-sm font-bold'
+						customStyles='text-xs w-fit px-2 py-1 rounded-sm font-bold'
 					/>
 				) : (
 					<>
@@ -25,14 +25,14 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
 							type='outline'
 							title='AI Logo'
 							handleClick={() => handleSubmit("logo")}
-							customStyles='text-xs w-full px-4 py-2.5 rounded-sm font-bold'
+							customStyles='text-xs w-full px-2 py-1 rounded-sm font-bold rounded-sm'
 						/>
 
 						<CustomButton
 							type='filled'
 							title='AI Full'
 							handleClick={() => handleSubmit("full")}
-							customStyles='text-xs w-full px-4 py-2.5 rounded-sm font-bold'
+							customStyles='text-xs w-full px-2 py-1 rounded-sm font-bold rounded-sm'
 						/>
 					</>
 				)}

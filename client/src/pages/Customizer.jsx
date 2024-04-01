@@ -69,8 +69,6 @@ const Customizer = () => {
 
 			const data = await response.json();
 
-			console.log(data);
-
 			handleDecals(type, `data:image/png;base64,${data.photo}`);
 		} catch (error) {
 			alert(error);
@@ -153,7 +151,7 @@ const Customizer = () => {
 							type='filled'
 							title='Go Back'
 							handleClick={() => (state.intro = true)}
-							customStyles='w-fit px-4 py-2.5 font-bold text-sm'
+							customStyles='w-fit px-4 py-2.5 font-bold text-sm rounded-md'
 						/>
 					</motion.div>
 
