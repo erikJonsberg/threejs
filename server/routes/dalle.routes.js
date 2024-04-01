@@ -1,17 +1,17 @@
 import express from "express";
 import * as dotenv from "dotenv";
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 
 dotenv.config();
 
 const router = express.Router();
 
 const openai = new OpenAI({
-	apiKey: process.env.OPENAI_API_KEY,
+	apiKey: process.env.OPENAI_API_KEY, // This is also the default, can be omitted
 });
 
 router.route("/").get((req, res) => {
-	res.status(200).json({ message: "Hello from DALL.E Routes" });
+	res.status(200).json({ message: "Hello from DALL.E ROUTES" });
 });
 
 router.route("/").post(async (req, res) => {
@@ -25,7 +25,9 @@ router.route("/").post(async (req, res) => {
 			response_format: "b64_json",
 		});
 
-		const image = response.data.data[0].b64_json;
+		const image = response.data[0].b64_json;
+
+		console.log(image);
 
 		res.status(200).json({ photo: image });
 	} catch (error) {

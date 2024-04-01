@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSnapshot } from "valtio";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSnapshot } from "valtio";
 
 import config from "../config/config";
 import state from "../store";
@@ -9,17 +9,18 @@ import { downloadCanvasToImage, reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
 import { fadeAnimation, slideAnimation } from "../config/motion";
 import {
-	CustomButton,
 	AIPicker,
 	ColorPicker,
-	Tab,
+	CustomButton,
 	FilePicker,
+	Tab,
 } from "../components";
 
 const Customizer = () => {
 	const snap = useSnapshot(state);
 
 	const [file, setFile] = useState("");
+
 	const [prompt, setPrompt] = useState("");
 	const [generatingImg, setGeneratingImg] = useState(false);
 
@@ -29,6 +30,7 @@ const Customizer = () => {
 		stylishShirt: false,
 	});
 
+	// show tab content depending on the activeTab
 	const generateTabContent = () => {
 		switch (activeEditorTab) {
 			case "colorpicker":
@@ -55,22 +57,23 @@ const Customizer = () => {
 		try {
 			setGeneratingImg(true);
 
-			const response = await fetch(
-				"https://threejs-pdxt.onrender.com/api/v1/dalle",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ prompt }),
-				}
-			);
+			const response = await fetch("http://localhost:8080/api/v1/dalle", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					prompt,
+				}),
+			});
 
 			const data = await response.json();
 
-			handleDecals(type, `data: image/png;base64,${data.photo}`);
+			console.log(data);
+
+			handleDecals(type, `data:image/png;base64,${data.photo}`);
 		} catch (error) {
-			alert(error.message);
+			alert(error);
 		} finally {
 			setGeneratingImg(false);
 			setActiveEditorTab("");
@@ -100,6 +103,8 @@ const Customizer = () => {
 				state.isFullTexture = false;
 				break;
 		}
+
+		// after setting the state, activeFilterTab is updated
 
 		setActiveFilterTab((prevState) => {
 			return {
@@ -148,7 +153,7 @@ const Customizer = () => {
 							type='filled'
 							title='Go Back'
 							handleClick={() => (state.intro = true)}
-							customStyles='w-fit rounded-md px-4 py-2.5 font-bold text-sm'
+							customStyles='w-fit px-4 py-2.5 font-bold text-sm'
 						/>
 					</motion.div>
 
